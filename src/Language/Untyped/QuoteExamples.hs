@@ -35,7 +35,7 @@ c3 = [untyped| \s. \z. s s s z |]
 
 plus, times :: Term
 plus  = [untyped| \m. \n. \s. \z. m s (n s z) |]
-times = [untyped| \m. \n. m (plus n) $c0 |]
+times = [untyped| \m. \n. m ($plus n) $c0 |]
 
 isZro :: Term
 isZro = [untyped| \m. m (\x. $fls) $tru |]
