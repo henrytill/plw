@@ -3,7 +3,6 @@
 module Language.Untyped.Lambda (Term(..)) where
 
 import           Data.Data
-import           Data.Typeable
 import           Language.Untyped.Base (Info)
 
 
@@ -25,6 +24,7 @@ printTm (TmApp _ t1@(TmAbs _ _ _) t2@(TmAbs _ _ _)) = "(" ++ printTm t1 ++ ") " 
 printTm (TmApp _ t1@(TmAbs _ _ _) t2@(TmApp _ _ _)) = "(" ++ printTm t1 ++ ") " ++ "(" ++ printTm t2 ++ ")"
 printTm (TmApp _ t1@(TmAbs _ _ _) t2)               = "(" ++ printTm t1 ++ ") "        ++ printTm t2
 printTm (TmApp _ t1               t2)               =        printTm t1 ++ " "         ++ printTm t2
+printTm (TmMetaVar _ _)                             = error "Attempting to print a metavariable"
 
 instance Show Term where
   show = printTm

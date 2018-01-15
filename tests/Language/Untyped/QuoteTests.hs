@@ -1,4 +1,5 @@
-{-# LANGUAGE QuasiQuotes #-}
+{-# LANGUAGE QuasiQuotes              #-}
+{-# OPTIONS_GHC -Wno-unused-top-binds #-}
 
 module Language.Untyped.QuoteTests (quoteTests) where
 

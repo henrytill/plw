@@ -4,7 +4,6 @@ module Language.Untyped.DeBruijn where
 
 import           Data.Data
 import           Data.List               (elemIndex)
-import           Data.Typeable
 import           Language.Untyped.Base   (Info)
 import qualified Language.Untyped.Lambda as Lambda
 
@@ -45,6 +44,7 @@ toDeBruijn = to []
                                           (elemIndex v vs)
     to vs (Lambda.TmAbs info x b) = TmAbs info x (to (x : vs) b)
     to vs (Lambda.TmApp info f a) = TmApp info (to vs f) (to vs a)
+    to _  (Lambda.TmMetaVar _ _)  = error "Attemtping to convert a metavariable to its DeBruijn-indexed version"
 
 termShift :: Int -> Term -> Term
 termShift d t = walk 0 t

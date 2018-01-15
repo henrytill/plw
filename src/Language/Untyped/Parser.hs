@@ -1,6 +1,5 @@
 module Language.Untyped.Parser (termP) where
 
-import           Data.List               (elemIndex)
 import           Language.Untyped.Base
 import           Language.Untyped.Lambda
 import           Text.Parsec
