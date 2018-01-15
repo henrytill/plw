@@ -20,7 +20,6 @@ extra-source-files:
 library
   exposed-modules:     Language.Untyped.Lambda
                      , Language.Untyped.DeBruijn
-                     , Language.Untyped.HOAS
                      , Language.Untyped.Parser
                      , Language.Untyped.Quote
   other-modules:       Language.Untyped.Base
