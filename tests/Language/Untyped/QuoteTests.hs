@@ -65,7 +65,7 @@ fix = [untyped| \f. (\x. f (\y. x x y)) (\x. f (\y. x x y)) |]
 
 testOnePlusOne :: TestTree
 testOnePlusOne
-  = testCase "1 + 1" $
+  = testCase "plus c1 c1" $
     assertEqual "For the result of eval," expected actual
   where
     expected = eval [] $ toDeBruijn [untyped| \s. \z. (\s. \z. s z) s ((\s. \z. s z) s z) |]
