@@ -18,15 +18,14 @@ extra-source-files:
   .gitignore
 
 library
-  exposed-modules:     Language.Untyped.Base
-                     , Language.Untyped.Lambda
+  exposed-modules:     Language.Untyped.Lambda
                      , Language.Untyped.DeBruijn
                      , Language.Untyped.HOAS
-                     , Language.Untyped.Lexer
                      , Language.Untyped.Parser
                      , Language.Untyped.Quote
+  other-modules:       Language.Untyped.Base
+                     , Language.Untyped.Lexer
                      , Language.Untyped.QuoteExamples
-  -- other-modules:       
   -- other-extensions:    
   build-depends:       base             >=4.10 && <4.11
                      , parsec           >=3.1  && <3.2
