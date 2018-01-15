@@ -12,10 +12,13 @@ data Term
   | TmAbs Info String Term
   | TmApp Info Term Term
   | TmMetaVar Info String
-  deriving (Eq, Show, Data, Typeable)
+  deriving (Eq, Data, Typeable)
 
--- instance Show Term where
---   show (TmVar _ v)                   = v
---   show (TmAbs _ v t)                 = "\\" ++ v ++ "." ++ show t
---   show (TmApp _ t1@(TmAbs _ _ _) t2) = "(" ++ show t1 ++ ") " ++ show t2
---   show (TmApp _ t1               t2) =        show t1 ++ " "  ++ show t2
+printTm :: Term -> String
+printTm (TmVar _ v)                   = v
+printTm (TmAbs _ v t)                 = "\\" ++ v ++ ". " ++ printTm t
+printTm (TmApp _ t1@(TmAbs _ _ _) t2) = "(" ++ printTm t1 ++ ") " ++ printTm t2
+printTm (TmApp _ t1               t2) =        printTm t1 ++ " "  ++ printTm t2
+
+instance Show Term where
+  show = printTm
