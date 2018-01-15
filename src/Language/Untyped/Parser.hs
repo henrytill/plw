@@ -1,4 +1,4 @@
-module Language.Untyped.Parser where
+module Language.Untyped.Parser (termP) where
 
 import           Data.List               (elemIndex)
 import           Language.Untyped.Base

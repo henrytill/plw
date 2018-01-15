@@ -1,4 +1,4 @@
-module Language.Untyped.Quote where
+module Language.Untyped.Quote (untyped) where
 
 import           Data.Generics.Aliases     (extQ)
 import qualified Language.Haskell.TH       as TH

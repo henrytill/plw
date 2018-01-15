@@ -1,6 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 
-module Language.Untyped.Lambda where
+module Language.Untyped.Lambda (Term(..)) where
 
 import           Data.Data
 import           Data.Typeable
