@@ -21,18 +21,18 @@ absP bodyP = do
   pos <- getPosition
   return $ TmAbs (infoFrom pos) v b
 
-varP :: Parser Term
-varP = do
-  v   <- Lexer.identifier
-  pos <- getPosition
-  return $ TmVar (infoFrom pos) v
-
 metaVarP :: Parser Term
 metaVarP = do
   _   <- char '$'
   v   <- Lexer.identifier
   pos <- getPosition
   return $ TmMetaVar (infoFrom pos) v
+
+varP :: Parser Term
+varP = do
+  v   <- Lexer.identifier
+  pos <- getPosition
+  return $ TmVar (infoFrom pos) v
 
 nonAppP :: Parser Term
 nonAppP = Lexer.parens termP <|> absP termP <|> metaVarP <|> varP
@@ -45,6 +45,3 @@ appP = do
 
 termP :: Parser Term
 termP = nonAppP `chainl1` appP
-
-parseLC :: String -> Either ParseError Term
-parseLC = runParser termP () "untyped lambda calculus"
