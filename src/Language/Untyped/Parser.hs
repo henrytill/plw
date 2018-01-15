@@ -6,6 +6,7 @@ import           Language.Untyped.Lambda
 import           Text.Parsec
 import           Text.Parsec.String      (Parser)
 
+
 infoFrom :: SourcePos -> Info
 infoFrom pos = Info (sourceLine pos) (sourceColumn pos)
 
@@ -15,17 +16,14 @@ lexeme p = do
   _ <- spaces
   return x
 
-symbol :: Parser Char
-symbol = oneOf "!%&|*+-/:<=>?@^_~"
+lexemeString :: String -> Parser String
+lexemeString = lexeme . string
 
 identifier :: Parser String
 identifier = lexeme $ do
   a <- letter
-  b <- many (letter <|> symbol <|> digit)
+  b <- many (letter <|> digit)
   return (a : b)
-
-lexemeString :: String -> Parser String
-lexemeString s = lexeme (string s)
 
 parens :: Parser Term -> Parser Term
 parens p = between (lexemeString "(") (lexemeString ")") p
