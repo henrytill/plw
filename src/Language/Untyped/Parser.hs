@@ -1,31 +1,10 @@
 module Language.Untyped.Parser (termP) where
 
-import           Language.Base
+import           Language.Base.Parser
 import           Language.Untyped.Lambda
 import           Text.Parsec
 import           Text.Parsec.String      (Parser)
 
-
-infoFrom :: SourcePos -> Info
-infoFrom pos = Info (sourceLine pos) (sourceColumn pos)
-
-lexeme :: Parser String -> Parser String
-lexeme p = do
-  x <- p
-  _ <- spaces
-  return x
-
-lexemeString :: String -> Parser String
-lexemeString = lexeme . string
-
-identifier :: Parser String
-identifier = lexeme $ do
-  a <- letter
-  b <- many (letter <|> digit)
-  return (a : b)
-
-parens :: Parser Term -> Parser Term
-parens p = between (lexemeString "(") (lexemeString ")") p
 
 absP :: Parser Term -> Parser Term
 absP bodyP = do
