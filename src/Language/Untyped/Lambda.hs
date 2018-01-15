@@ -3,7 +3,7 @@
 module Language.Untyped.Lambda (Term(..)) where
 
 import           Data.Data
-import           Language.Untyped.Base (Info)
+import           Language.Base (Info)
 
 
 data Term

@@ -4,7 +4,7 @@ module Language.Untyped.DeBruijn where
 
 import           Data.Data
 import           Data.List               (elemIndex)
-import           Language.Untyped.Base   (Info)
+import           Language.Base           (Info)
 import qualified Language.Untyped.Lambda as Lambda
 
 

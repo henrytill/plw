@@ -1,6 +1,6 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 
-module Language.Untyped.Base (Info(..)) where
+module Language.Base (Info(..)) where
 
 import           Data.Data
 

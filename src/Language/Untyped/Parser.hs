@@ -1,6 +1,6 @@
 module Language.Untyped.Parser (termP) where
 
-import           Language.Untyped.Base
+import           Language.Base
 import           Language.Untyped.Lambda
 import           Text.Parsec
 import           Text.Parsec.String      (Parser)
