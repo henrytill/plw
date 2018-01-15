@@ -4,10 +4,9 @@ import           Data.Generics.Aliases     (extQ)
 import qualified Language.Haskell.TH       as TH
 import           Language.Haskell.TH.Quote
 import           Language.Untyped.Lambda   (Term (TmMetaVar))
-import qualified Language.Untyped.Lexer    as Lexer
 import           Language.Untyped.Parser   (termP)
 import           Text.Parsec               (SourcePos, eof, runParser,
-                                            setPosition)
+                                            setPosition, spaces)
 import           Text.Parsec.Pos           (newPos)
 import           Text.Parsec.String        (Parser)
 
@@ -22,7 +21,7 @@ parseOrError :: Monad m => Parser Term -> String -> String -> m Term
 parseOrError p name str = either (error . show) return (runParser p () name str)
 
 topLevel :: Parser Term -> Parser Term
-topLevel p = Lexer.spaces *> p <* eof
+topLevel p = spaces *> p <* eof
 
 parseTerm :: Monad m => SourcePos -> String -> m Term
 parseTerm pos str = parseOrError (setPosition pos *> topLevel termP) "untyped lambda calculus" str

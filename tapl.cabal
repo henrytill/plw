@@ -24,7 +24,6 @@ library
                      , Language.Untyped.Parser
                      , Language.Untyped.Quote
   other-modules:       Language.Untyped.Base
-                     , Language.Untyped.Lexer
                      , Language.Untyped.QuoteExamples
   -- other-extensions:    
   build-depends:       base             >=4.10 && <4.11

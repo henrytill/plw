@@ -3,20 +3,39 @@ module Language.Untyped.Parser (termP) where
 import           Data.List               (elemIndex)
 import           Language.Untyped.Base
 import           Language.Untyped.Lambda
-import qualified Language.Untyped.Lexer  as Lexer
-import           Text.Parsec             hiding (spaces)
+import           Text.Parsec
 import           Text.Parsec.String      (Parser)
-
 
 infoFrom :: SourcePos -> Info
 infoFrom pos = Info (sourceLine pos) (sourceColumn pos)
 
+lexeme :: Parser String -> Parser String
+lexeme p = do
+  x <- p
+  _ <- spaces
+  return x
+
+symbol :: Parser Char
+symbol = oneOf "!%&|*+-/:<=>?@^_~"
+
+identifier :: Parser String
+identifier = lexeme $ do
+  a <- letter
+  b <- many (letter <|> symbol <|> digit)
+  return (a : b)
+
+lexemeString :: String -> Parser String
+lexemeString s = lexeme (string s)
+
+parens :: Parser Term -> Parser Term
+parens p = between (lexemeString "(") (lexemeString ")") p
+
 absP :: Parser Term -> Parser Term
 absP bodyP = do
   _   <- char '\\'
-  v   <- Lexer.identifier
+  v   <- identifier
   _   <- char '.'
-  _   <- Lexer.spaces
+  _   <- spaces
   b   <- bodyP
   pos <- getPosition
   return $ TmAbs (infoFrom pos) v b
@@ -24,22 +43,22 @@ absP bodyP = do
 metaVarP :: Parser Term
 metaVarP = do
   _   <- char '$'
-  v   <- Lexer.identifier
+  v   <- identifier
   pos <- getPosition
   return $ TmMetaVar (infoFrom pos) v
 
 varP :: Parser Term
 varP = do
-  v   <- Lexer.identifier
+  v   <- identifier
   pos <- getPosition
   return $ TmVar (infoFrom pos) v
 
 nonAppP :: Parser Term
-nonAppP = Lexer.parens termP <|> absP termP <|> metaVarP <|> varP
+nonAppP = parens termP <|> absP termP <|> metaVarP <|> varP
 
 appP :: Parsec String () (Term -> Term -> Term)
 appP = do
-  Lexer.spaces
+  _   <- spaces
   pos <- getPosition
   return $ TmApp (infoFrom pos)
 
