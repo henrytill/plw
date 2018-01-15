@@ -6,7 +6,6 @@ import qualified Text.Parsec.Language  as Language
 import           Text.Parsec.String    (Parser)
 import qualified Text.Parsec.Token     as Token
 
--- * Lexer
 
 symbol :: Parser Char
 symbol = oneOf "!%&|*+-/:<=>?@^_~"

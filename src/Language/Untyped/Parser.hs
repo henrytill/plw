@@ -7,6 +7,7 @@ import qualified Language.Untyped.Lexer  as Lexer
 import           Text.Parsec             hiding (spaces)
 import           Text.Parsec.String      (Parser)
 
+
 infoFrom :: SourcePos -> Info
 infoFrom pos = Info (sourceLine pos) (sourceColumn pos)
 
