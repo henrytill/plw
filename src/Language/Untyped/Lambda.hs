@@ -15,10 +15,16 @@ data Term
   deriving (Eq, Data, Typeable)
 
 printTm :: Term -> String
-printTm (TmVar _ v)                   = v
-printTm (TmAbs _ v t)                 = "\\" ++ v ++ ". " ++ printTm t
-printTm (TmApp _ t1@(TmAbs _ _ _) t2) = "(" ++ printTm t1 ++ ") " ++ printTm t2
-printTm (TmApp _ t1               t2) =        printTm t1 ++ " "  ++ printTm t2
+printTm (TmVar _ v)                                 = v
+printTm (TmAbs _ v t)                               = "\\" ++ v ++ ". " ++ printTm t
+printTm (TmApp _ t1@(TmVar _ _)   t2@(TmAbs _ _ _)) =        printTm t1 ++        " (" ++ printTm t2 ++ ")"
+printTm (TmApp _ t1@(TmVar _ _)   t2@(TmApp _ _ _)) =        printTm t1 ++        " (" ++ printTm t2 ++ ")"
+printTm (TmApp _ t1@(TmApp _ _ _) t2@(TmAbs _ _ _)) =        printTm t1 ++        " (" ++ printTm t2 ++ ")"
+printTm (TmApp _ t1@(TmApp _ _ _) t2@(TmApp _ _ _)) =        printTm t1 ++        " (" ++ printTm t2 ++ ")"
+printTm (TmApp _ t1@(TmAbs _ _ _) t2@(TmAbs _ _ _)) = "(" ++ printTm t1 ++ ") " ++ "(" ++ printTm t2 ++ ")"
+printTm (TmApp _ t1@(TmAbs _ _ _) t2@(TmApp _ _ _)) = "(" ++ printTm t1 ++ ") " ++ "(" ++ printTm t2 ++ ")"
+printTm (TmApp _ t1@(TmAbs _ _ _) t2)               = "(" ++ printTm t1 ++ ") "        ++ printTm t2
+printTm (TmApp _ t1               t2)               =        printTm t1 ++ " "         ++ printTm t2
 
 instance Show Term where
   show = printTm
