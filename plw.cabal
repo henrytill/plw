@@ -22,9 +22,13 @@ library
                      , Language.Untyped.DeBruijn
                      , Language.Untyped.Parser
                      , Language.Untyped.Quote
+                     , Language.SimpleBool.Syntax
+                     , Language.SimpleBool.Parser
+                     , Language.SimpleBool.Quote
   other-modules:       Language.Base
                      , Language.Base.Parser
                      , Language.Base.Quote
+                     , Language.SimpleBool.Lexer
   -- other-extensions:    
   build-depends:       base             >=4.10 && <4.11
                      , parsec           >=3.1  && <3.2
@@ -38,6 +42,7 @@ test-suite tests
   type:                exitcode-stdio-1.0
   main-is:             Main.hs
   other-modules:       Language.Untyped.QuoteTests
+                     , Language.SimpleBool.QuoteTests
   build-depends:       base        >=4.10 && <4.11
                      , tasty       >=0.11 && <0.12
                      , tasty-hunit >=0.9  && <0.10
