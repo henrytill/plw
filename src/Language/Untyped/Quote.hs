@@ -3,25 +3,11 @@ module Language.Untyped.Quote (untyped) where
 import           Data.Generics.Aliases     (extQ)
 import qualified Language.Haskell.TH       as TH
 import           Language.Haskell.TH.Quote
+import           Language.Base.Quote
 import           Language.Untyped.Lambda   (Term (TmMetaVar))
 import           Language.Untyped.Parser   (termP)
-import           Text.Parsec               (SourcePos, eof, runParser,
-                                            setPosition, spaces)
-import           Text.Parsec.Pos           (newPos)
-import           Text.Parsec.String        (Parser)
+import           Text.Parsec               (SourcePos, setPosition)
 
-
-getSourcePos :: TH.Q SourcePos
-getSourcePos = f <$> TH.location
-  where
-    f :: TH.Loc -> SourcePos
-    f loc = uncurry (newPos (TH.loc_filename loc)) (TH.loc_start loc)
-
-parseOrError :: Monad m => Parser Term -> String -> String -> m Term
-parseOrError p name str = either (error . show) return (runParser p () name str)
-
-topLevel :: Parser Term -> Parser Term
-topLevel p = spaces *> p <* eof
 
 parseTerm :: Monad m => SourcePos -> String -> m Term
 parseTerm pos str = parseOrError (setPosition pos *> topLevel termP) "untyped lambda calculus" str
