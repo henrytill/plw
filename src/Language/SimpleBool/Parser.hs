@@ -11,12 +11,12 @@ import           Text.Parsec.String         (Parser)
 
 
 tyBoolP :: Parser Ty
-tyBoolP = lexemeString "Bool" >> return TyBool
+tyBoolP = symbol "Bool" >> return TyBool
 
 tyArrP :: Parser Ty
 tyArrP = try $ do
   dom <- tyBoolP
-  _   <- lexemeString "->"
+  _   <- symbol "->"
   rng <- tyBoolP
   return $ TyArr dom rng
 
@@ -38,7 +38,7 @@ absP :: Parser Term -> Parser Term
 absP bodyP = do
   _   <- reservedOp "\\"
   v   <- identifier
-  _   <- lexemeString ":"
+  _   <- symbol ":"
   ty  <- tyP
   _   <- reservedOp "."
   _   <- spaces

@@ -4,7 +4,7 @@ module Language.SimpleBool.Lexer
   , reservedOp
   , identifier
   , spaces
-  , lexemeString
+  , symbol
   ) where
 
 import           Text.Parsec        hiding (spaces)
@@ -15,9 +15,6 @@ import qualified Text.Parsec.Token  as Token
 reservedNames :: [String]
 reservedNames = ["if", "then", "else", "true", "false"]
 
-symbol :: Parser Char
-symbol = oneOf "!$%&|*+-/:<=>?@^_~"
-
 langDef :: Token.LanguageDef ()
 langDef = Token.LanguageDef
   { Token.commentStart    = "{-"
@@ -27,7 +24,7 @@ langDef = Token.LanguageDef
   , Token.identStart      = letter
   , Token.identLetter     = alphaNum <|> oneOf "_'"
   , Token.opStart         = Token.opLetter langDef
-  , Token.opLetter        = symbol
+  , Token.opLetter        = oneOf "!$%&|*+-/:<=>?@^_~"
   , Token.reservedNames   = reservedNames
   , Token.reservedOpNames = []
   , Token.caseSensitive   = True
@@ -51,5 +48,5 @@ identifier = Token.identifier lexer
 spaces :: Parser ()
 spaces = Token.whiteSpace lexer
 
-lexemeString :: String -> Parser String
-lexemeString = Token.symbol lexer
+symbol :: String -> Parser String
+symbol = Token.symbol lexer
