@@ -20,10 +20,16 @@ lexeme p = do
 lexemeString :: String -> Parser String
 lexemeString = lexeme . string
 
+typeIdentifer :: Parser String
+typeIdentifer = lexeme $ do
+  a <- upper
+  b <- many alphaNum
+  return (a : b)
+
 identifier :: Parser String
 identifier = lexeme $ do
-  a <- letter
-  b <- many (letter <|> digit)
+  a <- lower
+  b <- many alphaNum
   return (a : b)
 
 parens :: Parser t -> Parser t
