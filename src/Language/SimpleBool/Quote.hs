@@ -5,20 +5,20 @@ import           Language.Base.Quote
 import qualified Language.Haskell.TH        as TH
 import           Language.Haskell.TH.Quote
 import           Language.SimpleBool.Parser (termP)
-import           Language.SimpleBool.Syntax (Term (TmMetaVar))
+import           Language.SimpleBool.Syntax (TermN (TmMetaVarN))
 import           Text.Parsec                (SourcePos, setPosition)
 
 
-parseTerm :: Monad m => SourcePos -> String -> m Term
+parseTerm :: Monad m => SourcePos -> String -> m TermN
 parseTerm pos str = parseOrError (setPosition pos *> topLevel termP) "simply-typed lambda calculus" str
 
-antiExpLambda :: Term -> Maybe (TH.Q TH.Exp)
-antiExpLambda (TmMetaVar _ v) = Just (TH.varE (TH.mkName v))
-antiExpLambda _               = Nothing
+antiExpLambda :: TermN -> Maybe (TH.Q TH.Exp)
+antiExpLambda (TmMetaVarN _ v) = Just (TH.varE (TH.mkName v))
+antiExpLambda _                = Nothing
 
-antiPatLambda :: Term -> Maybe (TH.Q TH.Pat)
-antiPatLambda (TmMetaVar _ v) = Just (TH.varP (TH.mkName v))
-antiPatLambda _               = Nothing
+antiPatLambda :: TermN -> Maybe (TH.Q TH.Pat)
+antiPatLambda (TmMetaVarN _ v) = Just (TH.varP (TH.mkName v))
+antiPatLambda _                = Nothing
 
 quoteExpLambda :: String -> TH.Q TH.Exp
 quoteExpLambda str = do

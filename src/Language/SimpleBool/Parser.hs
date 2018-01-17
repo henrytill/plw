@@ -23,18 +23,18 @@ tyArrP = try $ do
 tyP :: Parser Ty
 tyP = tyArrP <|> tyBoolP
 
-tmTrueP, tmFalseP :: Parser Term
-tmTrueP  = reserved "true"  >> TmTrue  <$> (fmap infoFrom getPosition)
-tmFalseP = reserved "false" >> TmFalse <$> (fmap infoFrom getPosition)
+tmTrueP, tmFalseP :: Parser TermN
+tmTrueP  = reserved "true"  >> TmTrueN  <$> (fmap infoFrom getPosition)
+tmFalseP = reserved "false" >> TmFalseN <$> (fmap infoFrom getPosition)
 
-tmIfP :: Parser Term -> Parser Term
+tmIfP :: Parser TermN -> Parser TermN
 tmIfP p =
-  TmIf <$> (fmap infoFrom getPosition)
-       <*> (reserved "if"   >> p)
-       <*> (reserved "then" >> p)
-       <*> (reserved "else" >> p)
+  TmIfN <$> (fmap infoFrom getPosition)
+        <*> (reserved "if"   >> p)
+        <*> (reserved "then" >> p)
+        <*> (reserved "else" >> p)
 
-absP :: Parser Term -> Parser Term
+absP :: Parser TermN -> Parser TermN
 absP bodyP = do
   _   <- reservedOp "\\"
   v   <- identifier
@@ -44,22 +44,22 @@ absP bodyP = do
   _   <- spaces
   b   <- bodyP
   pos <- getPosition
-  return $ TmAbs (infoFrom pos) v ty b
+  return $ TmAbsN (infoFrom pos) v ty b
 
-metaVarP :: Parser Term
+metaVarP :: Parser TermN
 metaVarP = do
   _   <- reservedOp "$"
   v   <- identifier
   pos <- getPosition
-  return $ TmMetaVar (infoFrom pos) v
+  return $ TmMetaVarN (infoFrom pos) v
 
-varP :: Parser Term
+varP :: Parser TermN
 varP = do
   v   <- identifier
   pos <- getPosition
-  return $ TmVar (infoFrom pos) v
+  return $ TmVarN (infoFrom pos) v
 
-nonAppP :: Parser Term
+nonAppP :: Parser TermN
 nonAppP = parens termP
       <|> tmIfP termP
       <|> tmTrueP
@@ -68,11 +68,11 @@ nonAppP = parens termP
       <|> metaVarP
       <|> varP
 
-appP :: Parsec String () (Term -> Term -> Term)
+appP :: Parsec String () (TermN -> TermN -> TermN)
 appP = do
   _   <- spaces
   pos <- getPosition
-  return $ TmApp (infoFrom pos)
+  return $ TmAppN (infoFrom pos)
 
-termP :: Parser Term
+termP :: Parser TermN
 termP = nonAppP `chainl1` appP

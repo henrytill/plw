@@ -10,14 +10,14 @@ data Ty
   | TyArr Ty Ty
   deriving (Eq, Show, Data, Typeable)
 
-data Term
-  = TmTrue Info
-  | TmFalse Info
-  | TmIf Info Term Term Term
-  | TmVar Info String
-  | TmAbs Info String Ty Term
-  | TmApp Info Term Term
-  | TmMetaVar Info String
+data TermN
+  = TmTrueN Info
+  | TmFalseN Info
+  | TmIfN Info TermN TermN TermN
+  | TmVarN Info String
+  | TmAbsN Info String Ty TermN
+  | TmAppN Info TermN TermN
+  | TmMetaVarN Info String
   deriving (Eq, Show, Data, Typeable)
 
 data Binding
