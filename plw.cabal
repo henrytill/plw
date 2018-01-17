@@ -19,8 +19,8 @@ extra-source-files:
   .gitignore
 
 library
-  exposed-modules:     Language.Untyped.Lambda
-                     , Language.Untyped.DeBruijn
+  exposed-modules:     Language.Untyped.Core
+                     , Language.Untyped.Syntax
                      , Language.Untyped.Parser
                      , Language.Untyped.Quote
                      , Language.SimpleBool.Syntax

@@ -1,12 +1,12 @@
 module Language.Untyped.Parser (termP) where
 
 import           Language.Base.Parser
-import           Language.Untyped.Lambda
+import           Language.Untyped.Syntax
 import           Text.Parsec
 import           Text.Parsec.String      (Parser)
 
 
-absP :: Parser Term -> Parser Term
+absP :: Parser TermN -> Parser TermN
 absP bodyP = do
   _   <- char '\\'
   v   <- identifier
@@ -14,29 +14,29 @@ absP bodyP = do
   _   <- spaces
   b   <- bodyP
   pos <- getPosition
-  return $ TmAbs (infoFrom pos) v b
+  return $ TmAbsN (infoFrom pos) v b
 
-metaVarP :: Parser Term
+metaVarP :: Parser TermN
 metaVarP = do
   _   <- char '$'
   v   <- identifier
   pos <- getPosition
-  return $ TmMetaVar (infoFrom pos) v
+  return $ TmMetaVarN (infoFrom pos) v
 
-varP :: Parser Term
+varP :: Parser TermN
 varP = do
   v   <- identifier
   pos <- getPosition
-  return $ TmVar (infoFrom pos) v
+  return $ TmVarN (infoFrom pos) v
 
-nonAppP :: Parser Term
+nonAppP :: Parser TermN
 nonAppP = parens termP <|> absP termP <|> metaVarP <|> varP
 
-appP :: Parsec String () (Term -> Term -> Term)
+appP :: Parsec String () (TermN -> TermN -> TermN)
 appP = do
   _   <- spaces
   pos <- getPosition
-  return $ TmApp (infoFrom pos)
+  return $ TmAppN (infoFrom pos)
 
-termP :: Parser Term
+termP :: Parser TermN
 termP = nonAppP `chainl1` appP
