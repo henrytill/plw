@@ -27,7 +27,6 @@ library
                      , Language.SimpleBool.Parser
                      , Language.SimpleBool.Quote
   other-modules:       Language.Base
-                     , Language.Base.Parser
                      , Language.Base.Quote
                      , Language.SimpleBool.Lexer
   -- other-extensions:    

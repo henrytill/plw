@@ -2,7 +2,7 @@
 
 module Language.SimpleBool.Parser (termP) where
 
-import           Language.Base.Parser       (infoFrom)
+import           Language.Base              (infoFrom)
 import           Language.SimpleBool.Lexer
 import           Language.SimpleBool.Syntax
 import           Text.Parsec                (Parsec, chainl1, getPosition, try,
