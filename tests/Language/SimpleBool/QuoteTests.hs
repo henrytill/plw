@@ -15,7 +15,7 @@ ifExpr01 :: TermN
 ifExpr01 = [simpleBool| \x : Bool -> Bool. if x false then true else false |]
 
 ifExpr02 :: TermN
-ifExpr02 = [simpleBool| \x : Bool -> Bool. if x then false else true |]
+ifExpr02 = [simpleBool| \x : Bool. if x then false else true |]
 
 appIf :: TermN
 appIf = [simpleBool| $ifExpr01 $ifExpr02 |]
