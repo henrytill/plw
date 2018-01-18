@@ -18,7 +18,7 @@ data TermN
   | TmAbsN Info String TermN
   | TmAppN Info TermN TermN
   | TmMetaVarN Info String
-  deriving (Eq, Data, Typeable)
+  deriving (Data, Typeable)
 
 printTmN :: TermN -> String
 printTmN (TmVarN _ v)                                   = v
@@ -70,7 +70,7 @@ termNtoB = to []
   where
     to :: [String] -> TermN -> TermB
     to vs (TmVarN info v)   = maybe (TmVarB info 0 (length vs))
-                                    (\x -> TmVarB info x (length vs))
+                                    (\ x -> TmVarB info x (length vs))
                                     (elemIndex v vs)
     to vs (TmAbsN info x b) = TmAbsB info x (to (x : vs) b)
     to vs (TmAppN info f a) = TmAppB info (to vs f) (to vs a)
