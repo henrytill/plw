@@ -5,6 +5,7 @@ import           Text.Parsec         (SourcePos, eof, spaces, runParser)
 import           Text.Parsec.Pos     (newPos)
 import           Text.Parsec.String  (Parser)
 
+
 getSourcePos :: TH.Q SourcePos
 getSourcePos = f <$> TH.location
   where

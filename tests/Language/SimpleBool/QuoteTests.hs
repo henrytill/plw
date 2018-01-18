@@ -7,6 +7,7 @@ import           Language.SimpleBool.Syntax (TermN)
 import           Language.SimpleBool.Quote  (simpleBool)
 import           Test.Tasty
 
+
 identity :: TermN
 identity = [simpleBool| \x : Bool. x |]
 

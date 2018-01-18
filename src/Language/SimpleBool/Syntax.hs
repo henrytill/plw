@@ -5,6 +5,7 @@ module Language.SimpleBool.Syntax where
 import           Data.Data
 import           Language.Base (Info)
 
+
 data Ty
   = TyBool
   | TyArr Ty Ty
