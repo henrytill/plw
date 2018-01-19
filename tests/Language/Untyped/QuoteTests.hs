@@ -81,8 +81,8 @@ testIdentityOfSelfApplication
     expected = eval [] $ termNtoB [untyped| \x. x x |]
     actual   = eval [] $ termNtoB [untyped| (\x. x) (\x. x x) |]
 
-quoteTests :: [TestTree]
-quoteTests =
+quoteTests :: TestTree
+quoteTests = testGroup "Untyped Lambda Calculus"
   [ testOnePlusOne
   , testIdentityOfSelfApplication
   ]
