@@ -110,6 +110,9 @@ instance Show TermB where
   show = printTmB
 
 instance Eq TermB where
+  TmTrueB  _         == TmTrueB  _         = True
+  TmFalseB _         == TmFalseB _         = True
+  TmIfB  _ l1 l2  l3 == TmIfB  _ r1 r2  r3 = l1 == r1 && l2  == r2  && l3 == r3
   TmVarB _ i1 t1     == TmVarB _ i2 t2     = i1 == i2 && t1  == t2
   TmAbsB _ s1 ty1 t1 == TmAbsB _ s2 ty2 t2 = s1 == s2 && ty1 == ty2 && t1 == t2
   TmAppB _ l1 l2     == TmAppB _ r1 r2     = l1 == r1 && l2  == r2
