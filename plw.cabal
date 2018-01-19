@@ -23,6 +23,7 @@ library
                      , Language.Untyped.Syntax
                      , Language.Untyped.Parser
                      , Language.Untyped.Quote
+                     , Language.SimpleBool.Core
                      , Language.SimpleBool.Syntax
                      , Language.SimpleBool.Parser
                      , Language.SimpleBool.Quote

@@ -3,6 +3,7 @@
 module Language.SimpleBool.Syntax
   ( Ty (..)
   , Binding (..)
+  , Context
   , addBinding
   , getBinding
   , getTypeFromContext
