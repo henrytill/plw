@@ -45,8 +45,8 @@ test-suite tests
   other-modules:       Language.Untyped.QuoteTests
                      , Language.SimpleBool.QuoteTests
   build-depends:       base        >=4.10 && <4.11
-                     , tasty       >=0.11 && <0.12
-                     , tasty-hunit >=0.9  && <0.10
+                     , tasty       >=1.0  && <1.1
+                     , tasty-hunit >=0.10 && <0.11
                      , plw
   hs-source-dirs:      tests
   default-language:    Haskell2010
