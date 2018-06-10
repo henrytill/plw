@@ -46,9 +46,8 @@ tmMap onVar c t = walk c t
 termShiftAbove :: Int -> Int -> TermB -> TermB
 termShiftAbove d c t = tmMap f c t
   where
-    f fi cc x n = if x >= cc
-                  then TmVarB fi (x + d) (n + d)
-                  else TmVarB fi x       (n + d)
+    f fi cc x n | x >= cc   = TmVarB fi (x + d) (n + d)
+                | otherwise = TmVarB fi x       (n + d)
 
 termShift :: Int -> TermB -> TermB
 termShift d t = termShiftAbove d 0 t
@@ -56,9 +55,8 @@ termShift d t = termShiftAbove d 0 t
 termSubst :: Int -> TermB -> TermB -> TermB
 termSubst j s t = tmMap f j t
   where
-    f fi jj x n = if x == jj
-                  then termShift jj s
-                  else TmVarB fi x n
+    f fi jj x n | x == jj   = termShift jj s
+                | otherwise = TmVarB fi x n
 
 termSubstTop :: TermB -> TermB -> TermB
 termSubstTop s t = termShift (-1) (termSubst 0 (termShift 1 s) t)
