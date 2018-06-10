@@ -44,10 +44,10 @@ getBinding _ ctx i
 
 getTypeFromContext :: Info -> Context -> Int -> Either String Ty
 getTypeFromContext fi ctx i =
-   case getBinding fi ctx i of
-     Right (VarBind tyT) -> Right tyT
-     Right _             -> Left "getTypeFromContext: Wrong kind of binding for variable"
-     Left msg            -> Left msg
+  case getBinding fi ctx i of
+    Right (VarBind tyT) -> Right tyT
+    Right _             -> Left "getTypeFromContext: Wrong kind of binding for variable"
+    Left msg            -> Left msg
 
 -- * String-based names
 
