@@ -3,8 +3,8 @@
 
 name:                plw
 version:             0.1.0.0
--- synopsis:
--- description:
+synopsis:            Programming Languages Workshop
+description:         A small project for language experiments.
 license:             ISC
 license-file:        LICENSE
 author:              Henry Till
@@ -17,6 +17,12 @@ tested-with:         GHC == 8.2.2, GHC == 8.4.4, GHC == 8.6.5, GHC == 8.8.3
 
 extra-source-files:
   .gitignore
+  .travis.yml
+  README.md
+
+source-repository head
+  type:     git
+  location: https://github.com/henrytill/plw
 
 library
   exposed-modules:     Language.Untyped.Core
@@ -37,7 +43,7 @@ library
                      , template-haskell >=2.12 && <2.17
   hs-source-dirs:      src
   default-language:    Haskell2010
-  ghc-options:         -Wall -Werror
+  ghc-options:         -Wall
 
 test-suite tests
   type:                exitcode-stdio-1.0
@@ -50,4 +56,4 @@ test-suite tests
                      , plw
   hs-source-dirs:      tests
   default-language:    Haskell2010
-  ghc-options:         -Wall -Werror
+  ghc-options:         -Wall
