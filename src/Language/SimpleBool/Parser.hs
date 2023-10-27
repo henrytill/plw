@@ -14,10 +14,10 @@ tyBoolP = symbol "Bool" >> return TyBool
 
 tyArrP :: Parser Ty
 tyArrP = try $ do
-  dom <- tyBoolP
+  d <- tyBoolP
   _ <- symbol "->"
-  rng <- tyBoolP
-  return $ TyArr dom rng
+  r <- tyBoolP
+  return $ TyArr d r
 
 tyP :: Parser Ty
 tyP = tyArrP <|> tyBoolP
@@ -38,12 +38,12 @@ absP bodyP = do
   _ <- reservedOp "\\"
   v <- identifier
   _ <- symbol ":"
-  ty <- tyP
+  t <- tyP
   _ <- reservedOp "."
   _ <- spaces
   b <- bodyP
   pos <- getPosition
-  return $ TmAbsN (infoFrom pos) v ty b
+  return $ TmAbsN (infoFrom pos) v t b
 
 metaVarP :: Parser TermN
 metaVarP = do

@@ -25,22 +25,22 @@ printTmN (TmVarN _ v) =
   v
 printTmN (TmAbsN _ v t) =
   "\\" ++ v ++ ". " ++ printTmN t
-printTmN (TmAppN _ t1@(TmVarN _ _) t2@(TmAbsN _ _ _)) =
-  printTmN t1 ++ " (" ++ printTmN t2 ++ ")"
-printTmN (TmAppN _ t1@(TmVarN _ _) t2@(TmAppN _ _ _)) =
-  printTmN t1 ++ " (" ++ printTmN t2 ++ ")"
-printTmN (TmAppN _ t1@(TmAppN _ _ _) t2@(TmAbsN _ _ _)) =
-  printTmN t1 ++ " (" ++ printTmN t2 ++ ")"
-printTmN (TmAppN _ t1@(TmAppN _ _ _) t2@(TmAppN _ _ _)) =
-  printTmN t1 ++ " (" ++ printTmN t2 ++ ")"
-printTmN (TmAppN _ t1@(TmAbsN _ _ _) t2@(TmAbsN _ _ _)) =
-  "(" ++ printTmN t1 ++ ") " ++ "(" ++ printTmN t2 ++ ")"
-printTmN (TmAppN _ t1@(TmAbsN _ _ _) t2@(TmAppN _ _ _)) =
-  "(" ++ printTmN t1 ++ ") " ++ "(" ++ printTmN t2 ++ ")"
-printTmN (TmAppN _ t1@(TmAbsN _ _ _) t2) =
-  "(" ++ printTmN t1 ++ ") " ++ printTmN t2
-printTmN (TmAppN _ t1 t2) =
-  printTmN t1 ++ " " ++ printTmN t2
+printTmN (TmAppN _ a@(TmVarN _ _) b@(TmAbsN _ _ _)) =
+  printTmN a ++ " (" ++ printTmN b ++ ")"
+printTmN (TmAppN _ a@(TmVarN _ _) b@(TmAppN _ _ _)) =
+  printTmN a ++ " (" ++ printTmN b ++ ")"
+printTmN (TmAppN _ a@(TmAppN _ _ _) b@(TmAbsN _ _ _)) =
+  printTmN a ++ " (" ++ printTmN b ++ ")"
+printTmN (TmAppN _ a@(TmAppN _ _ _) b@(TmAppN _ _ _)) =
+  printTmN a ++ " (" ++ printTmN b ++ ")"
+printTmN (TmAppN _ a@(TmAbsN _ _ _) b@(TmAbsN _ _ _)) =
+  "(" ++ printTmN a ++ ") " ++ "(" ++ printTmN b ++ ")"
+printTmN (TmAppN _ a@(TmAbsN _ _ _) b@(TmAppN _ _ _)) =
+  "(" ++ printTmN a ++ ") " ++ "(" ++ printTmN b ++ ")"
+printTmN (TmAppN _ a@(TmAbsN _ _ _) b) =
+  "(" ++ printTmN a ++ ") " ++ printTmN b
+printTmN (TmAppN _ a b) =
+  printTmN a ++ " " ++ printTmN b
 printTmN (TmMetaVarN _ _) =
   error "Attempting to print a metavariable"
 
@@ -60,37 +60,44 @@ printTmB (TmVarB _ i _) =
   show i
 printTmB (TmAbsB _ _ t) =
   "\\. " ++ printTmB t
-printTmB (TmAppB _ t1@(TmVarB _ _ _) t2@(TmAbsB _ _ _)) =
-  printTmB t1 ++ " (" ++ printTmB t2 ++ ")"
-printTmB (TmAppB _ t1@(TmVarB _ _ _) t2@(TmAppB _ _ _)) =
-  printTmB t1 ++ " (" ++ printTmB t2 ++ ")"
-printTmB (TmAppB _ t1@(TmAppB _ _ _) t2@(TmAbsB _ _ _)) =
-  printTmB t1 ++ " (" ++ printTmB t2 ++ ")"
-printTmB (TmAppB _ t1@(TmAppB _ _ _) t2@(TmAppB _ _ _)) =
-  printTmB t1 ++ " (" ++ printTmB t2 ++ ")"
-printTmB (TmAppB _ t1@(TmAbsB _ _ _) t2@(TmAbsB _ _ _)) =
-  "(" ++ printTmB t1 ++ ") " ++ "(" ++ printTmB t2 ++ ")"
-printTmB (TmAppB _ t1@(TmAbsB _ _ _) t2@(TmAppB _ _ _)) =
-  "(" ++ printTmB t1 ++ ") " ++ "(" ++ printTmB t2 ++ ")"
-printTmB (TmAppB _ t1@(TmAbsB _ _ _) t2) =
-  "(" ++ printTmB t1 ++ ") " ++ printTmB t2
-printTmB (TmAppB _ t1 t2) =
-  printTmB t1 ++ " " ++ printTmB t2
+printTmB (TmAppB _ a@(TmVarB _ _ _) b@(TmAbsB _ _ _)) =
+  printTmB a ++ " (" ++ printTmB b ++ ")"
+printTmB (TmAppB _ a@(TmVarB _ _ _) b@(TmAppB _ _ _)) =
+  printTmB a ++ " (" ++ printTmB b ++ ")"
+printTmB (TmAppB _ a@(TmAppB _ _ _) b@(TmAbsB _ _ _)) =
+  printTmB a ++ " (" ++ printTmB b ++ ")"
+printTmB (TmAppB _ a@(TmAppB _ _ _) b@(TmAppB _ _ _)) =
+  printTmB a ++ " (" ++ printTmB b ++ ")"
+printTmB (TmAppB _ a@(TmAbsB _ _ _) b@(TmAbsB _ _ _)) =
+  "(" ++ printTmB a ++ ") " ++ "(" ++ printTmB b ++ ")"
+printTmB (TmAppB _ a@(TmAbsB _ _ _) b@(TmAppB _ _ _)) =
+  "(" ++ printTmB a ++ ") " ++ "(" ++ printTmB b ++ ")"
+printTmB (TmAppB _ a@(TmAbsB _ _ _) b) =
+  "(" ++ printTmB a ++ ") " ++ printTmB b
+printTmB (TmAppB _ a b) =
+  printTmB a ++ " " ++ printTmB b
 
 instance Show TermB where
   show = printTmB
 
 instance Eq TermB where
-  TmVarB _ i1 t1 == TmVarB _ i2 t2 = i1 == i2 && t1 == t2
-  TmAbsB _ s1 t1 == TmAbsB _ s2 t2 = s1 == s2 && t1 == t2
-  TmAppB _ l1 l2 == TmAppB _ r1 r2 = l1 == r1 && l2 == r2
-  _ == _ = False
+  TmVarB _ a b == TmVarB _ n o =
+    a == n && b == o
+
+  TmAbsB _ a b == TmAbsB _ n o =
+    a == n && b == o
+
+  TmAppB _ a b == TmAppB _ n o =
+    a == n && b == o
+
+  _ == _ =
+    False
 
 termNtoB :: TermN -> TermB
 termNtoB = to []
   where
     to :: [String] -> TermN -> TermB
-    to vs (TmVarN info v) = maybe (TmVarB info 0 (length vs)) (\ x -> TmVarB info x (length vs)) (elemIndex v vs)
-    to vs (TmAbsN info x b) = TmAbsB info x (to (x : vs) b)
-    to vs (TmAppN info f a) = TmAppB info (to vs f) (to vs a)
+    to l (TmVarN i v) = maybe (TmVarB i 0 (length l)) (\ x -> TmVarB i x (length l)) (elemIndex v l)
+    to l (TmAbsN i x b) = TmAbsB i x (to (x : l) b)
+    to l (TmAppN i f a) = TmAppB i (to l f) (to l a)
     to _ (TmMetaVarN _ _) = error "Attempting to convert a metavariable to its de-Bruijn-indexed version"
