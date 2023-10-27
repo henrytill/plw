@@ -1,9 +1,9 @@
 module Language.Base.Quote where
 
 import qualified Language.Haskell.TH as TH
-import           Text.Parsec         (SourcePos, eof, spaces, runParser)
-import           Text.Parsec.Pos     (newPos)
-import           Text.Parsec.String  (Parser)
+import Text.Parsec (SourcePos, eof, runParser, spaces)
+import Text.Parsec.Pos (newPos)
+import Text.Parsec.String (Parser)
 
 
 getSourcePos :: TH.Q SourcePos

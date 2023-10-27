@@ -1,8 +1,8 @@
 module Main (main) where
 
 import qualified Language.SimpleBool.QuoteTests as S
-import qualified Language.Untyped.QuoteTests    as U
-import           Test.Tasty
+import qualified Language.Untyped.QuoteTests as U
+import Test.Tasty
 
 
 unitTests :: TestTree

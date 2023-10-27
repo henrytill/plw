@@ -1,13 +1,13 @@
-{-# LANGUAGE QuasiQuotes              #-}
+{-# LANGUAGE QuasiQuotes #-}
 {-# OPTIONS_GHC -Wno-unused-top-binds #-}
 
 module Language.SimpleBool.QuoteTests where
 
-import           Language.SimpleBool.Core
-import           Language.SimpleBool.Syntax
-import           Language.SimpleBool.Quote  (simpleBool)
-import           Test.Tasty
-import           Test.Tasty.HUnit
+import Language.SimpleBool.Core
+import Language.SimpleBool.Quote (simpleBool)
+import Language.SimpleBool.Syntax
+import Test.Tasty
+import Test.Tasty.HUnit
 
 
 identity :: TermN
@@ -19,7 +19,7 @@ testTypeOfIdentity
     assertEqual "For the result of typeOf," expected actual
   where
     expected = Right (TyArr TyBool TyBool)
-    actual   = typeOf [] (termNtoB identity)
+    actual = typeOf [] (termNtoB identity)
 
 ifExpr01 :: TermN
 ifExpr01 = [simpleBool| \x : Bool -> Bool. if x false then true else false |]
@@ -30,7 +30,7 @@ testTypeOfIfExpr01
     assertEqual "For the result of typeOf," expected actual
   where
     expected = Right (TyArr (TyArr TyBool TyBool) TyBool)
-    actual   = typeOf [] (termNtoB ifExpr01)
+    actual = typeOf [] (termNtoB ifExpr01)
 
 ifExpr02 :: TermN
 ifExpr02 = [simpleBool| \x : Bool. if x then false else true |]
@@ -41,7 +41,7 @@ testTypeOfIfExpr02
     assertEqual "For the result of typeOf," expected actual
   where
     expected = Right (TyArr TyBool TyBool)
-    actual   = typeOf [] (termNtoB ifExpr02)
+    actual = typeOf [] (termNtoB ifExpr02)
 
 appIf :: TermN
 appIf = [simpleBool| $ifExpr01 $ifExpr02 |]
@@ -52,7 +52,7 @@ testTypeOfAppIf
     assertEqual "For the result of typeOf," expected actual
   where
     expected = Right TyBool
-    actual   = typeOf [] (termNtoB appIf)
+    actual = typeOf [] (termNtoB appIf)
 
 quoteTests :: TestTree
 quoteTests = testGroup "Simply-typed Lambda Calculus"

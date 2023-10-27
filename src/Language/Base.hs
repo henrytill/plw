@@ -5,8 +5,8 @@ module Language.Base
   , infoFrom
   ) where
 
-import           Data.Data
-import           Text.Parsec (SourcePos, sourceColumn, sourceLine)
+import Data.Data
+import Text.Parsec (SourcePos, sourceColumn, sourceLine)
 
 
 data Info = Info { row :: Int, col :: Int } deriving (Eq, Show, Data, Typeable)
