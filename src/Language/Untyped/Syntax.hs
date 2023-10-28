@@ -1,15 +1,15 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 
 module Language.Untyped.Syntax
-  ( TermN (..)
-  , TermB (..)
-  , termNtoB
-  ) where
+  ( TermN (..),
+    TermB (..),
+    termNtoB,
+  )
+where
 
 import Data.Data
 import Data.List (elemIndex)
 import Language.Base (Info)
-
 
 -- * String-based names
 
@@ -83,13 +83,10 @@ instance Show TermB where
 instance Eq TermB where
   TmVarB _ a b == TmVarB _ n o =
     a == n && b == o
-
   TmAbsB _ a b == TmAbsB _ n o =
     a == n && b == o
-
   TmAppB _ a b == TmAppB _ n o =
     a == n && b == o
-
   _ == _ =
     False
 
@@ -97,7 +94,7 @@ termNtoB :: TermN -> TermB
 termNtoB = to []
   where
     to :: [String] -> TermN -> TermB
-    to l (TmVarN i v) = maybe (TmVarB i 0 (length l)) (\ x -> TmVarB i x (length l)) (elemIndex v l)
+    to l (TmVarN i v) = maybe (TmVarB i 0 (length l)) (\x -> TmVarB i x (length l)) (elemIndex v l)
     to l (TmAbsN i x b) = TmAbsB i x (to (x : l) b)
     to l (TmAppN i f a) = TmAppB i (to l f) (to l a)
     to _ (TmMetaVarN _ _) = error "Attempting to convert a metavariable to its de-Bruijn-indexed version"

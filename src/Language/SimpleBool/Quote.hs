@@ -8,8 +8,7 @@ import Language.SimpleBool.Parser (termP)
 import Language.SimpleBool.Syntax (TermN (TmMetaVarN))
 import Text.Parsec (SourcePos, setPosition)
 
-
-parseTerm :: Monad m => SourcePos -> String -> m TermN
+parseTerm :: (Monad m) => SourcePos -> String -> m TermN
 parseTerm pos str = parseOrError (setPosition pos *> topLevel termP) "simply-typed lambda calculus" str
 
 antiExpLambda :: TermN -> Maybe (TH.Q TH.Exp)
@@ -33,9 +32,10 @@ quotePatLambda str = do
   dataToPatQ (const Nothing `extQ` antiPatLambda) term
 
 simpleBool :: QuasiQuoter
-simpleBool = QuasiQuoter
-  { quoteExp = quoteExpLambda
-  , quotePat = quotePatLambda
-  , quoteType = undefined
-  , quoteDec = undefined
-  }
+simpleBool =
+  QuasiQuoter
+    { quoteExp = quoteExpLambda,
+      quotePat = quotePatLambda,
+      quoteType = undefined,
+      quoteDec = undefined
+    }

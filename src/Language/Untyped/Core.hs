@@ -2,7 +2,6 @@ module Language.Untyped.Core (eval) where
 
 import Language.Untyped.Syntax (TermB (..))
 
-
 termShift :: Int -> TermB -> TermB
 termShift d t = walk 0 t
   where
@@ -29,7 +28,7 @@ isVal _ (TmAbsB _ _ _) = True
 isVal _ _ = False
 
 eval1 :: t -> TermB -> Maybe TermB
-eval1 ctx (TmAppB _  (TmAbsB _ _ t12) v2) | isVal ctx v2 = pure (termSubstTop v2 t12)
+eval1 ctx (TmAppB _ (TmAbsB _ _ t12) v2) | isVal ctx v2 = pure (termSubstTop v2 t12)
 eval1 ctx (TmAppB fi v1 t2) | isVal ctx v1 = TmAppB <$> pure fi <*> pure v1 <*> eval1 ctx t2
 eval1 ctx (TmAppB fi t1 t2) = TmAppB <$> pure fi <*> eval1 ctx t1 <*> pure t2
 eval1 _ _ = Nothing

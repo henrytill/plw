@@ -9,13 +9,12 @@ import Language.SimpleBool.Syntax
 import Test.Tasty
 import Test.Tasty.HUnit
 
-
 identity :: TermN
 identity = [simpleBool| \x : Bool. x |]
 
 testTypeOfIdentity :: TestTree
-testTypeOfIdentity
-  = testCase ("typeOf " ++ show identity) $
+testTypeOfIdentity =
+  testCase ("typeOf " ++ show identity) $
     assertEqual "For the result of typeOf," expected actual
   where
     expected = Right (TyArr TyBool TyBool)
@@ -25,8 +24,8 @@ ifExpr01 :: TermN
 ifExpr01 = [simpleBool| \x : Bool -> Bool. if x false then true else false |]
 
 testTypeOfIfExpr01 :: TestTree
-testTypeOfIfExpr01
-  = testCase ("typeOf " ++ show ifExpr01) $
+testTypeOfIfExpr01 =
+  testCase ("typeOf " ++ show ifExpr01) $
     assertEqual "For the result of typeOf," expected actual
   where
     expected = Right (TyArr (TyArr TyBool TyBool) TyBool)
@@ -36,8 +35,8 @@ ifExpr02 :: TermN
 ifExpr02 = [simpleBool| \x : Bool. if x then false else true |]
 
 testTypeOfIfExpr02 :: TestTree
-testTypeOfIfExpr02
-  = testCase ("typeOf " ++ show ifExpr02) $
+testTypeOfIfExpr02 =
+  testCase ("typeOf " ++ show ifExpr02) $
     assertEqual "For the result of typeOf," expected actual
   where
     expected = Right (TyArr TyBool TyBool)
@@ -47,17 +46,19 @@ appIf :: TermN
 appIf = [simpleBool| $ifExpr01 $ifExpr02 |]
 
 testTypeOfAppIf :: TestTree
-testTypeOfAppIf
-  = testCase ("typeOf " ++ show appIf) $
+testTypeOfAppIf =
+  testCase ("typeOf " ++ show appIf) $
     assertEqual "For the result of typeOf," expected actual
   where
     expected = Right TyBool
     actual = typeOf [] (termNtoB appIf)
 
 quoteTests :: TestTree
-quoteTests = testGroup "Simply-typed Lambda Calculus"
-  [ testTypeOfIdentity
-  , testTypeOfIfExpr01
-  , testTypeOfIfExpr02
-  , testTypeOfAppIf
-  ]
+quoteTests =
+  testGroup
+    "Simply-typed Lambda Calculus"
+    [ testTypeOfIdentity,
+      testTypeOfIfExpr01,
+      testTypeOfIfExpr02,
+      testTypeOfAppIf
+    ]

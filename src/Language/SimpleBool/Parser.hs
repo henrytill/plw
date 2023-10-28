@@ -8,7 +8,6 @@ import Language.SimpleBool.Syntax
 import Text.Parsec (Parsec, chainl1, getPosition, try, (<|>))
 import Text.Parsec.String (Parser)
 
-
 tyBoolP :: Parser Ty
 tyBoolP = symbol "Bool" >> return TyBool
 
@@ -23,15 +22,16 @@ tyP :: Parser Ty
 tyP = tyArrP <|> tyBoolP
 
 tmTrueP, tmFalseP :: Parser TermN
-tmTrueP = reserved "true"  >> TmTrueN <$> (fmap infoFrom getPosition)
+tmTrueP = reserved "true" >> TmTrueN <$> (fmap infoFrom getPosition)
 tmFalseP = reserved "false" >> TmFalseN <$> (fmap infoFrom getPosition)
 
 tmIfP :: Parser TermN -> Parser TermN
 tmIfP p =
-  TmIfN <$> (fmap infoFrom getPosition)
-        <*> (reserved "if" >> p)
-        <*> (reserved "then" >> p)
-        <*> (reserved "else" >> p)
+  TmIfN
+    <$> (fmap infoFrom getPosition)
+    <*> (reserved "if" >> p)
+    <*> (reserved "then" >> p)
+    <*> (reserved "else" >> p)
 
 absP :: Parser TermN -> Parser TermN
 absP bodyP = do
@@ -59,13 +59,14 @@ varP = do
   return $ TmVarN (infoFrom pos) v
 
 nonAppP :: Parser TermN
-nonAppP = parens termP
-      <|> tmIfP termP
-      <|> tmTrueP
-      <|> tmFalseP
-      <|> absP termP
-      <|> metaVarP
-      <|> varP
+nonAppP =
+  parens termP
+    <|> tmIfP termP
+    <|> tmTrueP
+    <|> tmFalseP
+    <|> absP termP
+    <|> metaVarP
+    <|> varP
 
 appP :: Parsec String () (TermN -> TermN -> TermN)
 appP = do

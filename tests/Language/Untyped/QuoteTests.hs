@@ -6,10 +6,9 @@ module Language.Untyped.QuoteTests (quoteTests) where
 import Language.Untyped.Core (eval)
 import Language.Untyped.Quote (untyped)
 import Language.Untyped.Syntax (TermN, termNtoB)
-import Prelude hiding (and, fst, not, or, snd, succ)
 import Test.Tasty
 import Test.Tasty.HUnit
-
+import Prelude hiding (and, fst, not, or, snd, succ)
 
 -- * Examples
 
@@ -66,23 +65,25 @@ fix = [untyped| \f. (\x. f (\y. x x y)) (\x. f (\y. x x y)) |]
 -- * Test Cases
 
 testOnePlusOne :: TestTree
-testOnePlusOne
-  = testCase "plus c1 c1" $
+testOnePlusOne =
+  testCase "plus c1 c1" $
     assertEqual "For the result of eval," expected actual
   where
     expected = eval [] $ termNtoB [untyped| \s. \z. (\s. \z. s z) s ((\s. \z. s z) s z) |]
     actual = eval [] $ termNtoB [untyped| $plus $c1 $c1 |]
 
 testIdentityOfSelfApplication :: TestTree
-testIdentityOfSelfApplication
-  = testCase "(\\.x x) (\\x. x x)" $
+testIdentityOfSelfApplication =
+  testCase "(\\.x x) (\\x. x x)" $
     assertEqual "For the result of eval," expected actual
   where
     expected = eval [] $ termNtoB [untyped| \x. x x |]
     actual = eval [] $ termNtoB [untyped| (\x. x) (\x. x x) |]
 
 quoteTests :: TestTree
-quoteTests = testGroup "Untyped Lambda Calculus"
-  [ testOnePlusOne
-  , testIdentityOfSelfApplication
-  ]
+quoteTests =
+  testGroup
+    "Untyped Lambda Calculus"
+    [ testOnePlusOne,
+      testIdentityOfSelfApplication
+    ]

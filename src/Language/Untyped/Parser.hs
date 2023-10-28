@@ -5,10 +5,8 @@ import Language.Untyped.Syntax
 import Text.Parsec
 import Text.Parsec.String (Parser)
 
-
 -- |
 -- <https://www.reddit.com/r/haskell/comments/2ia5u2/after_some_failed_attempts_to_learn_parsec_i_came/cl0c3b7/>
---
 lexeme :: Parser String -> Parser String
 lexeme p = do
   x <- p

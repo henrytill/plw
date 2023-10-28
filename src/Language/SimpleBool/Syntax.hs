@@ -1,21 +1,21 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 
 module Language.SimpleBool.Syntax
-  ( Ty (..)
-  , Binding (..)
-  , Context
-  , addBinding
-  , getBinding
-  , getTypeFromContext
-  , TermN (..)
-  , TermB (..)
-  , termNtoB
-  ) where
+  ( Ty (..),
+    Binding (..),
+    Context,
+    addBinding,
+    getBinding,
+    getTypeFromContext,
+    TermN (..),
+    TermB (..),
+    termNtoB,
+  )
+where
 
 import Data.Data
 import Data.List (elemIndex)
 import Language.Base (Info)
-
 
 data Ty
   = TyBool
@@ -37,7 +37,7 @@ addBinding :: Context -> String -> Binding -> Context
 addBinding ctx x bind = (x, bind) : ctx
 
 getBinding :: Info -> Context -> Int -> Either String Binding
-getBinding _ ctx i = maybe l Right (snd <$> lookup i (zip [0..] ctx))
+getBinding _ ctx i = maybe l Right (snd <$> lookup i (zip [0 ..] ctx))
   where
     l = Left ("Variable lookup failure: offset: " ++ show i ++ ", ctx size: " ++ show (length ctx))
 
@@ -138,22 +138,16 @@ instance Show TermB where
 instance Eq TermB where
   TmTrueB _ == TmTrueB _ =
     True
-
   TmFalseB _ == TmFalseB _ =
     True
-
   TmIfB _ a b c == TmIfB _ n o p =
     a == n && b == o && c == p
-
   TmVarB _ a b == TmVarB _ n o =
     a == n && b == o
-
   TmAbsB _ a b c == TmAbsB _ n o p =
     a == n && b == o && c == p
-
   TmAppB _ a b == TmAppB _ n o =
     a == n && b == o
-
   _ == _ =
     False
 
@@ -164,7 +158,7 @@ termNtoB = to []
     to _ (TmTrueN i) = TmTrueB i
     to _ (TmFalseN i) = TmFalseB i
     to l (TmIfN i p c a) = TmIfB i (to l p) (to l c) (to l a)
-    to l (TmVarN i v) = maybe (TmVarB i 0 (length l)) (\ x -> TmVarB i x (length l)) (elemIndex v l)
+    to l (TmVarN i v) = maybe (TmVarB i 0 (length l)) (\x -> TmVarB i x (length l)) (elemIndex v l)
     to l (TmAbsN i x t b) = TmAbsB i x t (to (x : l) b)
     to l (TmAppN i f a) = TmAppB i (to l f) (to l a)
     to _ (TmMetaVarN _ _) = error "Attempting to convert a metavariable to its de-Bruijn-indexed version"
