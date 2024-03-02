@@ -1,5 +1,4 @@
 {-# LANGUAGE QuasiQuotes #-}
-{-# OPTIONS_GHC -Wno-unused-top-binds #-}
 
 module Language.SimpleBool.QuoteTests where
 
