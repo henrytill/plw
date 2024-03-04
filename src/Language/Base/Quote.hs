@@ -11,8 +11,8 @@ getSourcePos = f <$> TH.location
     f :: TH.Loc -> SourcePos
     f loc = uncurry (newPos (TH.loc_filename loc)) (TH.loc_start loc)
 
-parseOrError :: (Monad m) => Parser t -> String -> String -> m t
-parseOrError p name str = either (error . show) return (parse p name str)
+parseOrError :: Parser t -> String -> String -> TH.Q t
+parseOrError p name str = either (fail . show) return (parse p name str)
 
 topLevel :: Parser t -> Parser t
 topLevel p = spaces *> p <* eof

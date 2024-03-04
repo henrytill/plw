@@ -8,7 +8,7 @@ import Language.SimpleBool.Parser (termP)
 import Language.SimpleBool.Syntax (TermN (TmMetaVarN))
 import Text.Parsec (SourcePos, setPosition)
 
-parseTerm :: (Monad m) => SourcePos -> String -> m TermN
+parseTerm :: SourcePos -> String -> TH.Q TermN
 parseTerm pos str = parseOrError (setPosition pos *> topLevel termP) "simply-typed lambda calculus" str
 
 antiExpLambda :: TermN -> Maybe (TH.Q TH.Exp)
