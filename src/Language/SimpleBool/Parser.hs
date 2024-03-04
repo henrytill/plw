@@ -1,9 +1,9 @@
 module Language.SimpleBool.Parser (termP) where
 
-import Language.Base (infoFrom)
+import Language.Base.Parser (getInfo)
 import Language.SimpleBool.Lexer
 import Language.SimpleBool.Syntax
-import Text.Parsec (Parsec, chainl1, getPosition, try, (<|>))
+import Text.Parsec (Parsec, chainl1, try, (<|>))
 import Text.Parsec.String (Parser)
 
 tyBoolP :: Parser Ty
@@ -20,13 +20,13 @@ tyP :: Parser Ty
 tyP = tyArrP <|> tyBoolP
 
 tmTrueP, tmFalseP :: Parser TermN
-tmTrueP = reserved "true" >> TmTrueN <$> (fmap infoFrom getPosition)
-tmFalseP = reserved "false" >> TmFalseN <$> (fmap infoFrom getPosition)
+tmTrueP = reserved "true" >> TmTrueN <$> getInfo
+tmFalseP = reserved "false" >> TmFalseN <$> getInfo
 
 tmIfP :: Parser TermN -> Parser TermN
 tmIfP p =
   TmIfN
-    <$> (fmap infoFrom getPosition)
+    <$> getInfo
     <*> (reserved "if" >> p)
     <*> (reserved "then" >> p)
     <*> (reserved "else" >> p)
@@ -40,21 +40,21 @@ absP bodyP = do
   _ <- reservedOp "."
   _ <- spaces
   b <- bodyP
-  pos <- getPosition
-  return $ TmAbsN (infoFrom pos) v t b
+  info <- getInfo
+  return $ TmAbsN info v t b
 
 metaVarP :: Parser TermN
 metaVarP = do
   _ <- reservedOp "$"
   v <- identifier
-  pos <- getPosition
-  return $ TmMetaVarN (infoFrom pos) v
+  info <- getInfo
+  return $ TmMetaVarN info v
 
 varP :: Parser TermN
 varP = do
   v <- identifier
-  pos <- getPosition
-  return $ TmVarN (infoFrom pos) v
+  info <- getInfo
+  return $ TmVarN info v
 
 nonAppP :: Parser TermN
 nonAppP =
@@ -69,8 +69,8 @@ nonAppP =
 appP :: Parsec String () (TermN -> TermN -> TermN)
 appP = do
   _ <- spaces
-  pos <- getPosition
-  return $ TmAppN (infoFrom pos)
+  info <- getInfo
+  return $ TmAppN info
 
 termP :: Parser TermN
 termP = nonAppP `chainl1` appP
