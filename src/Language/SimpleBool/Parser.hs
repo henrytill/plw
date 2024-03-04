@@ -1,5 +1,3 @@
-{-# OPTIONS_GHC -Wno-unused-top-binds #-}
-
 module Language.SimpleBool.Parser (termP) where
 
 import Language.Base (infoFrom)
