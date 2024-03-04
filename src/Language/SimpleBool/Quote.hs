@@ -2,7 +2,7 @@ module Language.SimpleBool.Quote (simpleBool) where
 
 import Data.Generics.Aliases (extQ)
 import Language.Base.Quote
-import qualified Language.Haskell.TH as TH
+import Language.Haskell.TH qualified as TH
 import Language.Haskell.TH.Quote
 import Language.SimpleBool.Parser (termP)
 import Language.SimpleBool.Syntax (TermN (TmMetaVarN))

@@ -1,6 +1,6 @@
 module Language.Base.Quote where
 
-import qualified Language.Haskell.TH as TH
+import Language.Haskell.TH qualified as TH
 import Text.Parsec (SourcePos, eof, parse, spaces)
 import Text.Parsec.Pos (newPos)
 import Text.Parsec.String (Parser)

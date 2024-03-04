@@ -10,7 +10,7 @@ where
 
 import Text.Parsec hiding (spaces)
 import Text.Parsec.String (Parser)
-import qualified Text.Parsec.Token as Token
+import Text.Parsec.Token qualified as Token
 
 reservedNames :: [String]
 reservedNames = ["if", "then", "else", "true", "false"]

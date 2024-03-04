@@ -1,7 +1,7 @@
 module Main (main) where
 
-import qualified Language.SimpleBool.QuoteTests as S
-import qualified Language.Untyped.QuoteTests as U
+import Language.SimpleBool.QuoteTests qualified as S
+import Language.Untyped.QuoteTests qualified as U
 import Test.Tasty
 
 unitTests :: TestTree

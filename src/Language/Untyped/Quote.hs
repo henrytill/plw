@@ -2,7 +2,7 @@ module Language.Untyped.Quote (untyped) where
 
 import Data.Generics.Aliases (extQ)
 import Language.Base.Quote
-import qualified Language.Haskell.TH as TH
+import Language.Haskell.TH qualified as TH
 import Language.Haskell.TH.Quote
 import Language.Untyped.Parser (termP)
 import Language.Untyped.Syntax (TermN (TmMetaVarN))
