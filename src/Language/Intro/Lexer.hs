@@ -9,7 +9,7 @@ import Text.Parsec.Token qualified as Token
 langDef :: LanguageDef a
 langDef =
   Language.emptyDef
-    { Token.reservedOpNames = ["+", "*"]
+    { Token.reservedOpNames = ["+", "*", "^", "-"]
     }
 
 lexer :: TokenParser ()

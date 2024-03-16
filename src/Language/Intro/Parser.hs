@@ -8,6 +8,12 @@ import Text.Parsec.Expr (Assoc (..), Operator (..))
 import Text.Parsec.Expr qualified as Expr
 import Text.Parsec.String (Parser)
 
+prefixOperator ::
+  String ->
+  (a -> a) ->
+  Operator String () Identity a
+prefixOperator name f = Prefix (f <$ reservedOp name)
+
 binaryOperator ::
   String ->
   (a -> a -> a) ->
@@ -22,8 +28,9 @@ expression :: Parser Expression
 expression = Expr.buildExpressionParser table term <?> "expression"
   where
     table =
-      [ [binaryOperator "*" Mul AssocLeft],
-        [binaryOperator "+" Add AssocLeft]
+      [ [prefixOperator "-" Neg],
+        [binaryOperator "^" Exp AssocRight, binaryOperator "*" Mul AssocLeft],
+        [binaryOperator "+" Add AssocLeft, binaryOperator "-" Sub AssocLeft]
       ]
     term =
       choice
