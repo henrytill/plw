@@ -23,6 +23,7 @@ library
   exposed-modules:     Language.Intro.Lexer
                        Language.Intro.Parser
                        Language.Intro.Quote
+                       Language.Intro.Semantics
                        Language.Intro.Syntax
                        Language.Untyped.Core
                        Language.Untyped.Syntax
