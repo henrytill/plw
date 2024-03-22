@@ -23,7 +23,7 @@ identifier = lexeme $ do
   return (a : b)
 
 parens :: Parser t -> Parser t
-parens p = between (lexemeString "(") (lexemeString ")") p
+parens = between (lexemeString "(") (lexemeString ")")
 
 absP :: Parser TermN -> Parser TermN
 absP bodyP = do
@@ -54,8 +54,7 @@ nonAppP = parens termP <|> absP termP <|> metaVarP <|> varP
 appP :: Parsec String () (TermN -> TermN -> TermN)
 appP = do
   _ <- spaces
-  info <- getInfo
-  return $ TmAppN info
+  TmAppN <$> getInfo
 
 termP :: Parser TermN
 termP = nonAppP `chainl1` appP

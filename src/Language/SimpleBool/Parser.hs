@@ -13,8 +13,7 @@ tyArrP :: Parser Ty
 tyArrP = try $ do
   d <- tyBoolP
   _ <- symbol "->"
-  r <- tyBoolP
-  return $ TyArr d r
+  TyArr d <$> tyBoolP
 
 tyP :: Parser Ty
 tyP = tyArrP <|> tyBoolP
@@ -69,8 +68,7 @@ nonAppP =
 appP :: Parsec String () (TermN -> TermN -> TermN)
 appP = do
   _ <- spaces
-  info <- getInfo
-  return $ TmAppN info
+  TmAppN <$> getInfo
 
 termP :: Parser TermN
 termP = nonAppP `chainl1` appP

@@ -9,7 +9,7 @@ import Language.Untyped.Syntax (TermN (TmMetaVarN))
 import Text.Parsec (SourcePos, setPosition)
 
 parseTerm :: SourcePos -> String -> TH.Q TermN
-parseTerm pos str = parseOrError (setPosition pos *> topLevel termP) "untyped lambda calculus" str
+parseTerm pos = parseOrError (setPosition pos *> topLevel termP) "untyped lambda calculus"
 
 antiExpLambda :: TermN -> Maybe (TH.Q TH.Exp)
 antiExpLambda (TmMetaVarN _ v) = Just (TH.varE (TH.mkName v))

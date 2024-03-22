@@ -19,7 +19,7 @@ binaryOperator ::
   (a -> a -> a) ->
   Assoc ->
   Operator String () Identity a
-binaryOperator name f assoc = Infix (f <$ reservedOp name) assoc
+binaryOperator name f = Infix (f <$ reservedOp name)
 
 metaVar :: Parser String
 metaVar = symbol "$" *> identifier

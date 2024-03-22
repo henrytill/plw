@@ -37,7 +37,7 @@ addBinding :: Context -> String -> Binding -> Context
 addBinding ctx x bind = (x, bind) : ctx
 
 getBinding :: Info -> Context -> Int -> Either String Binding
-getBinding _ ctx i = maybe l Right (snd <$> lookup i (zip [0 ..] ctx))
+getBinding _ ctx i = maybe l (Right . snd) (lookup i (zip [0 ..] ctx))
   where
     l = Left ("Variable lookup failure: offset: " ++ show i ++ ", ctx size: " ++ show (length ctx))
 
@@ -71,23 +71,23 @@ printTmN (TmVarN _ s) =
   s
 printTmN (TmAbsN _ _ ty t) =
   "\\ " ++ show ty ++ ". " ++ printTmN t
-printTmN (TmAppN _ a@(TmVarN _ _) b@(TmAbsN _ _ _ _)) =
+printTmN (TmAppN _ a@(TmVarN {}) b@(TmAbsN {})) =
   printTmN a ++ " (" ++ printTmN b ++ ")"
-printTmN (TmAppN _ a@(TmVarN _ _) b@(TmAppN _ _ _)) =
+printTmN (TmAppN _ a@(TmVarN {}) b@(TmAppN {})) =
   printTmN a ++ " (" ++ printTmN b ++ ")"
-printTmN (TmAppN _ a@(TmAppN _ _ _) b@(TmAbsN _ _ _ _)) =
+printTmN (TmAppN _ a@(TmAppN {}) b@(TmAbsN {})) =
   printTmN a ++ " (" ++ printTmN b ++ ")"
-printTmN (TmAppN _ a@(TmAppN _ _ _) b@(TmAppN _ _ _)) =
+printTmN (TmAppN _ a@(TmAppN {}) b@(TmAppN {})) =
   printTmN a ++ " (" ++ printTmN b ++ ")"
-printTmN (TmAppN _ a@(TmAbsN _ _ _ _) b@(TmAbsN _ _ _ _)) =
+printTmN (TmAppN _ a@(TmAbsN {}) b@(TmAbsN {})) =
   "(" ++ printTmN a ++ ") " ++ "(" ++ printTmN b ++ ")"
-printTmN (TmAppN _ a@(TmAbsN _ _ _ _) b@(TmAppN _ _ _)) =
+printTmN (TmAppN _ a@(TmAbsN {}) b@(TmAppN {})) =
   "(" ++ printTmN a ++ ") " ++ "(" ++ printTmN b ++ ")"
-printTmN (TmAppN _ a@(TmAbsN _ _ _ _) b) =
+printTmN (TmAppN _ a@(TmAbsN {}) b) =
   "(" ++ printTmN a ++ ") " ++ printTmN b
 printTmN (TmAppN _ a b) =
   printTmN a ++ " " ++ printTmN b
-printTmN (TmMetaVarN _ _) =
+printTmN (TmMetaVarN {}) =
   error "Attempting to print a metavariable"
 
 instance Show TermN where
@@ -115,19 +115,19 @@ printTmB (TmVarB _ i _) =
   show i
 printTmB (TmAbsB _ _ ty t) =
   "\\ " ++ show ty ++ ". " ++ printTmB t
-printTmB (TmAppB _ a@(TmVarB _ _ _) b@(TmAbsB _ _ _ _)) =
+printTmB (TmAppB _ a@(TmVarB {}) b@(TmAbsB {})) =
   printTmB a ++ " (" ++ printTmB b ++ ")"
-printTmB (TmAppB _ a@(TmVarB _ _ _) b@(TmAppB _ _ _)) =
+printTmB (TmAppB _ a@(TmVarB {}) b@(TmAppB {})) =
   printTmB a ++ " (" ++ printTmB b ++ ")"
-printTmB (TmAppB _ a@(TmAppB _ _ _) b@(TmAbsB _ _ _ _)) =
+printTmB (TmAppB _ a@(TmAppB {}) b@(TmAbsB {})) =
   printTmB a ++ " (" ++ printTmB b ++ ")"
-printTmB (TmAppB _ a@(TmAppB _ _ _) b@(TmAppB _ _ _)) =
+printTmB (TmAppB _ a@(TmAppB {}) b@(TmAppB {})) =
   printTmB a ++ " (" ++ printTmB b ++ ")"
-printTmB (TmAppB _ a@(TmAbsB _ _ _ _) b@(TmAbsB _ _ _ _)) =
+printTmB (TmAppB _ a@(TmAbsB {}) b@(TmAbsB {})) =
   "(" ++ printTmB a ++ ") " ++ "(" ++ printTmB b ++ ")"
-printTmB (TmAppB _ a@(TmAbsB _ _ _ _) b@(TmAppB _ _ _)) =
+printTmB (TmAppB _ a@(TmAbsB {}) b@(TmAppB {})) =
   "(" ++ printTmB a ++ ") " ++ "(" ++ printTmB b ++ ")"
-printTmB (TmAppB _ a@(TmAbsB _ _ _ _) b) =
+printTmB (TmAppB _ a@(TmAbsB {}) b) =
   "(" ++ printTmB a ++ ") " ++ printTmB b
 printTmB (TmAppB _ a b) =
   printTmB a ++ " " ++ printTmB b
@@ -161,4 +161,4 @@ termNtoB = to []
     to l (TmVarN i v) = maybe (TmVarB i 0 (length l)) (\x -> TmVarB i x (length l)) (elemIndex v l)
     to l (TmAbsN i x t b) = TmAbsB i x t (to (x : l) b)
     to l (TmAppN i f a) = TmAppB i (to l f) (to l a)
-    to _ (TmMetaVarN _ _) = error "Attempting to convert a metavariable to its de-Bruijn-indexed version"
+    to _ (TmMetaVarN {}) = error "Attempting to convert a metavariable to its de-Bruijn-indexed version"
