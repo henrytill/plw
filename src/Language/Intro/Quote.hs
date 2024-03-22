@@ -1,10 +1,10 @@
 module Language.Intro.Quote (intro) where
 
 import Data.Generics.Aliases (extQ)
+import Language.Base.Quote (getSourcePos, parseOrError)
 import Language.Haskell.TH qualified as TH
 import Language.Haskell.TH.Quote (QuasiQuoter (..))
 import Language.Haskell.TH.Syntax (dataToExpQ, dataToPatQ)
-import Language.Base.Quote (getSourcePos, parseOrError)
 import Language.Intro.Parser (expression, topLevel)
 import Language.Intro.Syntax (Expression (..))
 import Text.Parsec (SourcePos, setPosition)
