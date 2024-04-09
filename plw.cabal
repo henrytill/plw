@@ -47,7 +47,7 @@ library
   default-extensions:  ImportQualifiedPost
   ghc-options:         -Wall
 
-test-suite tests
+test-suite test
   type:                exitcode-stdio-1.0
   main-is:             Main.hs
   other-modules:       Language.Intro.QuoteTests
@@ -57,7 +57,7 @@ test-suite tests
                      , tasty       >=1.0  && <1.4
                      , tasty-hunit >=0.10 && <0.11
                      , plw
-  hs-source-dirs:      tests
+  hs-source-dirs:      test
   default-language:    Haskell98
   default-extensions:  ImportQualifiedPost
   ghc-options:         -Wall
