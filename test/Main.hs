@@ -1,17 +1,19 @@
 module Main (main) where
 
-import Language.Intro.QuoteTests qualified as I
-import Language.SimpleBool.QuoteTests qualified as S
-import Language.Untyped.QuoteTests qualified as U
+import Language.Calc.QuoteTests qualified as Calc
+import Language.Intro.QuoteTests qualified as Intro
+import Language.SimpleBool.QuoteTests qualified as SimpleBool
+import Language.Untyped.QuoteTests qualified as Untyped
 import Test.Tasty
 
 unitTests :: TestTree
 unitTests =
   testGroup
     "Unit tests"
-    [ I.quoteTests,
-      U.quoteTests,
-      S.quoteTests
+    [ Calc.quoteTests,
+      Intro.quoteTests,
+      Untyped.quoteTests,
+      SimpleBool.quoteTests
     ]
 
 main :: IO ()
