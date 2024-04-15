@@ -10,19 +10,21 @@ $alpha = [a-zA-Z]
 
 tokens :-
 
-  $white+                        ;
-  $digit+                        { \p s -> TokenConst p (read s) }
-  $alpha [$alpha $digit \_ \']*  { \p s -> TokenVar p s }
-  \+                             { \p _ -> TokenPlus p }
-  \-                             { \p _ -> TokenMinus p }
-  \*                             { \p _ -> TokenTimes p }
-  \^                             { \p _ -> TokenExp p }
-  \(                             { \p _ -> TokenLParen p }
-  \)                             { \p _ -> TokenRParen p }
+  $white+                          ;
+  $alpha [$alpha $digit \_ \']*    { \p s -> TokenVar p s }
+  \$ $alpha [$alpha $digit \_ \']* { \p s -> TokenMetaVar p (drop 1 s) }
+  $digit+                          { \p s -> TokenConst p (read s) }
+  \+                               { \p _ -> TokenPlus p }
+  \-                               { \p _ -> TokenMinus p }
+  \*                               { \p _ -> TokenTimes p }
+  \^                               { \p _ -> TokenExp p }
+  \(                               { \p _ -> TokenLParen p }
+  \)                               { \p _ -> TokenRParen p }
 
 {
 data Token
   = TokenVar AlexPosn String
+  | TokenMetaVar AlexPosn String
   | TokenConst AlexPosn Integer
   | TokenPlus AlexPosn
   | TokenMinus AlexPosn

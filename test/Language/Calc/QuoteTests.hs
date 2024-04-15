@@ -71,6 +71,16 @@ parseExample =
       (Add (Mul (Add (Mul (Const 0) (Var "x")) (Const 1)) (Const 3)) (Const 12))
       [intro| (0 * x + 1) * 3 + 12 |]
 
+parseMeta :: TestTree
+parseMeta =
+  testCase "$m - 1" $
+    assertEqual
+      "For the result of parse, "
+      (Sub (Const 1) (Const 1))
+      [intro| $m - 1 |]
+  where
+    m = Const 1
+
 quoteTests :: TestTree
 quoteTests =
   testGroup
@@ -82,5 +92,6 @@ quoteTests =
       parseExp,
       parseSubNeg,
       parseMulAdd,
-      parseExample
+      parseExample,
+      parseMeta
     ]
