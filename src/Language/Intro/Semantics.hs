@@ -42,4 +42,6 @@ simplify (Sub e1 e2) = simplify1 (Sub (simplify e1) (simplify e2))
 simplify (Mul e1 e2) = simplify1 (Mul (simplify e1) (simplify e2))
 simplify (Exp e1 e2) = simplify1 (Exp (simplify e1) (simplify e2))
 simplify (Neg e) = simplify1 (Neg (simplify e))
-simplify e = simplify1 e
+simplify (Const m) = Const m
+simplify (Var a) = Var a
+simplify (MetaVar _) = undefined
