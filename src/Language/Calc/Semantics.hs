@@ -1,6 +1,6 @@
-module Language.Intro.Semantics (simplify) where
+module Language.Calc.Semantics (simplify) where
 
-import Language.Intro.Syntax
+import Language.Calc.Syntax
 
 errRaiseNegative :: String
 errRaiseNegative = "cannot raise to a negative power"

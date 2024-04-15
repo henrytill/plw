@@ -23,11 +23,11 @@ library
   exposed-modules:     Language.Calc.Lexer
                        Language.Calc.Parser
                        Language.Calc.Quote
+                       Language.Calc.Semantics
                        Language.Calc.Syntax
                        Language.Intro.Lexer
                        Language.Intro.Parser
                        Language.Intro.Quote
-                       Language.Intro.Semantics
                        Language.Intro.Syntax
                        Language.Untyped.Core
                        Language.Untyped.Syntax
