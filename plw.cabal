@@ -20,16 +20,7 @@ source-repository head
   location: https://github.com/henrytill/plw
 
 library
-  exposed-modules:     Language.Calc.Lexer
-                       Language.Calc.Parser
-                       Language.Calc.Quote
-                       Language.Calc.Semantics
-                       Language.Calc.Syntax
-                       Language.Intro.Lexer
-                       Language.Intro.Parser
-                       Language.Intro.Quote
-                       Language.Intro.Syntax
-                       Language.Untyped.Core
+  exposed-modules:     Language.Untyped.Core
                        Language.Untyped.Syntax
                        Language.Untyped.Parser
                        Language.Untyped.Quote
@@ -43,12 +34,9 @@ library
                        Language.SimpleBool.Lexer
   -- other-extensions:
   build-depends:       base             >=4.10 && <5
-                     , array            >=0.5  && <0.6
                      , parsec           >=3.1  && <3.2
                      , syb              >=0.7  && <0.8
                      , template-haskell >=2.12 && <2.22
-  build-tool-depends:  alex:alex        >=3.2
-                     , happy:happy      >=1.19
   hs-source-dirs:      src
   default-language:    Haskell98
   default-extensions:  ImportQualifiedPost
@@ -57,9 +45,7 @@ library
 test-suite test
   type:                exitcode-stdio-1.0
   main-is:             Main.hs
-  other-modules:       Language.Calc.QuoteTests
-                       Language.Intro.QuoteTests
-                       Language.Untyped.QuoteTests
+  other-modules:       Language.Untyped.QuoteTests
                        Language.SimpleBool.QuoteTests
   build-depends:       base        >=4.10 && <5
                      , tasty       >=1.0  && <1.4
