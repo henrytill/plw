@@ -34,8 +34,8 @@ quotePatLambda str = do
 untyped :: QuasiQuoter
 untyped =
   QuasiQuoter
-    { quoteExp = quoteExpLambda,
-      quotePat = quotePatLambda,
-      quoteType = undefined,
-      quoteDec = undefined
+    { quoteExp = quoteExpLambda
+    , quotePat = quotePatLambda
+    , quoteType = undefined
+    , quoteDec = undefined
     }

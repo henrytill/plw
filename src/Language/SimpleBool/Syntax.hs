@@ -1,15 +1,15 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 
 module Language.SimpleBool.Syntax
-  ( Ty (..),
-    Binding (..),
-    Context,
-    addBinding,
-    getBinding,
-    getTypeFromContext,
-    TermN (..),
-    TermB (..),
-    termNtoB,
+  ( Ty (..)
+  , Binding (..)
+  , Context
+  , addBinding
+  , getBinding
+  , getTypeFromContext
+  , TermN (..)
+  , TermB (..)
+  , termNtoB
   )
 where
 

@@ -1,9 +1,9 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 
 module Language.Untyped.Syntax
-  ( TermN (..),
-    TermB (..),
-    termNtoB,
+  ( TermN (..)
+  , TermB (..)
+  , termNtoB
   )
 where
 

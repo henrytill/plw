@@ -1,8 +1,8 @@
 {-# LANGUAGE DeriveDataTypeable #-}
 
 module Language.Base
-  ( Info (..),
-    infoFrom,
+  ( Info (..)
+  , infoFrom
   )
 where
 

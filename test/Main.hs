@@ -8,8 +8,8 @@ unitTests :: TestTree
 unitTests =
   testGroup
     "Unit tests"
-    [ Untyped.quoteTests,
-      SimpleBool.quoteTests
+    [ Untyped.quoteTests
+    , SimpleBool.quoteTests
     ]
 
 main :: IO ()

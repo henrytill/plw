@@ -84,6 +84,6 @@ quoteTests :: TestTree
 quoteTests =
   testGroup
     "Untyped Lambda Calculus"
-    [ testOnePlusOne,
-      testIdentityOfSelfApplication
+    [ testOnePlusOne
+    , testIdentityOfSelfApplication
     ]

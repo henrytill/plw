@@ -54,8 +54,8 @@ quoteTests :: TestTree
 quoteTests =
   testGroup
     "Simply-typed Lambda Calculus"
-    [ testTypeOfIdentity,
-      testTypeOfIfExpr01,
-      testTypeOfIfExpr02,
-      testTypeOfAppIf
+    [ testTypeOfIdentity
+    , testTypeOfIfExpr01
+    , testTypeOfIfExpr02
+    , testTypeOfAppIf
     ]
